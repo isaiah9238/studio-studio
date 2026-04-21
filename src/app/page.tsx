@@ -7,13 +7,13 @@ import { LibrariansDesk } from '@/components/dashboard/LibrariansDesk';
 
 export default function DashboardPage() {
   return (
-    <main className="h-screen w-screen bg-background flex flex-col p-4 gap-4 select-none">
+    <main className="h-screen w-screen bg-background flex flex-col p-4 gap-4 select-none overflow-hidden">
       {/* Top Section */}
-      <div className="grid grid-cols-12 gap-4 h-[40%]">
-        <div className="col-span-8">
+      <div className="grid grid-cols-12 gap-4 h-[40%] min-h-0">
+        <div className="col-span-8 h-full min-h-0">
           <ScryingPool />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-4 h-full min-h-0">
           <ThePulse />
         </div>
       </div>

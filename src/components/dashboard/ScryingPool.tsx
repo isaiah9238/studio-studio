@@ -19,7 +19,7 @@ export function ScryingPool() {
     
     const interval = setInterval(() => {
       const newLog: LogEntry = {
-        id: Math.random().toString(36).substr(2, 9),
+        id: Math.random().toString(36).substring(2, 11),
         timestamp: new Date().toISOString(),
         source: ['VFS', 'AUTH', 'CORE', 'NET'][Math.floor(Math.random() * 4)],
         message: `Heartbeat received from node ${Math.floor(Math.random() * 1000)} - Integrity checked.`,
@@ -64,7 +64,7 @@ export function ScryingPool() {
         }]);
       }
     } catch (err) {
-      // Error handling
+      console.error('AI analysis failed:', err);
     } finally {
       setIsAnalyzing(false);
     }
@@ -88,7 +88,7 @@ export function ScryingPool() {
 
   return (
     <div className="flex flex-col h-full bg-card border border-primary/20 rounded-lg overflow-hidden relative shadow-[0_0_20px_rgba(0,229,255,0.05)]">
-      <div className="flex items-center justify-between p-3 border-b border-primary/20 bg-primary/5">
+      <div className="flex items-center justify-between p-3 border-b border-primary/20 bg-primary/5 z-10 shrink-0">
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4 text-primary animate-pulse-cyan" />
           <h2 className="text-xs font-bold tracking-[0.2em] text-primary uppercase">Scrying Pool</h2>
@@ -109,14 +109,16 @@ export function ScryingPool() {
         </Button>
       </div>
       
-      <div className="flex-1 overflow-hidden p-2 font-code text-[11px] scanline relative">
+      <div className="flex-1 relative overflow-hidden scanline bg-black/20">
         <div 
           ref={scrollRef}
-          className="h-full overflow-y-auto terminal-scroll pr-2"
+          className="absolute inset-0 overflow-y-auto terminal-scroll p-3 font-code text-[11px] leading-relaxed"
         >
           {logs.map((log) => (
-            <div key={log.id} className="mb-1 group">
-              <span className="text-muted-foreground mr-2">[{log.timestamp.includes('T') ? log.timestamp.split('T')[1].split('.')[0] : log.timestamp}]</span>
+            <div key={log.id} className="mb-1.5 group">
+              <span className="text-muted-foreground mr-2 shrink-0">
+                [{log.timestamp.includes('T') ? log.timestamp.split('T')[1].split('.')[0] : log.timestamp}]
+              </span>
               <span className={cn(
                 "font-bold mr-2",
                 log.type === 'critical' ? 'text-destructive' : 
@@ -137,6 +139,7 @@ export function ScryingPool() {
               <span className="animate-bounce">_</span> ANALYZING_NEURAL_PATTERNS...
             </div>
           )}
+          <div className="h-4" /> {/* Spacer for bottom scroll padding */}
         </div>
       </div>
     </div>
