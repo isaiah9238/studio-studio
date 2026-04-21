@@ -7,13 +7,16 @@ import { Button } from '@/components/ui/button';
 import { aiLogAnomalyDetection } from '@/ai/flows/ai-log-anomaly-detection-flow';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 export function ScryingPool() {
   const [logs, setLogs] = useState<LogEntry[]>(INITIAL_LOGS);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       const newLog: LogEntry = {
         id: Math.random().toString(36).substr(2, 9),
@@ -61,7 +64,7 @@ export function ScryingPool() {
         }]);
       }
     } catch (err) {
-      console.error(err);
+      // Errors handled centrally if error emitter is present, otherwise simple catch
     } finally {
       setIsAnalyzing(false);
     }
@@ -95,9 +98,9 @@ export function ScryingPool() {
           ref={scrollRef}
           className="h-full overflow-y-auto terminal-scroll pr-2"
         >
-          {logs.map((log) => (
+          {mounted && logs.map((log) => (
             <div key={log.id} className="mb-1 group">
-              <span className="text-muted-foreground mr-2">[{log.timestamp.split('T')[1].split('.')[0]}]</span>
+              <span className="text-muted-foreground mr-2">[{log.timestamp.includes('T') ? log.timestamp.split('T')[1].split('.')[0] : log.timestamp}]</span>
               <span className={cn(
                 "font-bold mr-2",
                 log.type === 'critical' ? 'text-destructive' : 
@@ -107,8 +110,7 @@ export function ScryingPool() {
               </span>
               <span className={cn(
                 "group-hover:text-foreground/100 text-foreground/80 transition-colors",
-                log.type === 'critical' && "text-destructive font-bold animate-pulse",
-                log.type === 'security' && "text-destructive underline decoration-destructive/30"
+                log.type === 'critical' && "text-destructive font-bold animate-pulse"
               )}>
                 {log.message}
               </span>
@@ -123,8 +125,4 @@ export function ScryingPool() {
       </div>
     </div>
   );
-}
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
 }

@@ -7,10 +7,10 @@ export interface LogEntry {
 }
 
 export const INITIAL_LOGS: LogEntry[] = [
-  { id: '1', timestamp: new Date().toISOString(), source: 'BOOTSTRAP', message: 'Initializing THE_ALCHEMIST_FORTRESS v1.0', type: 'info' },
-  { id: '2', timestamp: new Date().toISOString(), source: 'AUTH', message: 'Identity Confirmed: admin-fortress@vice44-121e4.iam.gserviceaccount.com', type: 'info' },
-  { id: '3', timestamp: new Date().toISOString(), source: 'VFS', message: 'Signal Clear. Neural Map connectivity established.', type: 'info' },
-  { id: '4', timestamp: new Date().toISOString(), source: 'FIREWALL', message: 'Unauthorized handshake attempt blocked from 192.168.1.45', type: 'security' },
+  { id: '1', timestamp: '2024-01-01T12:00:00.000Z', source: 'BOOTSTRAP', message: 'Initializing THE_ALCHEMIST_FORTRESS v1.0', type: 'info' },
+  { id: '2', timestamp: '2024-01-01T12:00:01.000Z', source: 'AUTH', message: 'Identity Confirmed: admin-fortress@vice44-121e4.iam.gserviceaccount.com', type: 'info' },
+  { id: '3', timestamp: '2024-01-01T12:00:02.000Z', source: 'VFS', message: 'Signal Clear. Neural Map connectivity established.', type: 'info' },
+  { id: '4', timestamp: '2024-01-01T12:00:03.000Z', source: 'FIREWALL', message: 'Unauthorized handshake attempt blocked from 192.168.1.45', type: 'security' },
 ];
 
 export const VAULTS = [

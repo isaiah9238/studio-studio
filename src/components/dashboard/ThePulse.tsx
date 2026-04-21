@@ -1,7 +1,7 @@
 "use client"
 
 import { useHeartbeat } from '@/hooks/useHeartbeat';
-import { Activity, Radio, AlertTriangle } from 'lucide-react';
+import { Activity } from 'lucide-react';
 
 export function ThePulse() {
   const { status, latency, lastCheck } = useHeartbeat();
@@ -52,7 +52,9 @@ export function ThePulse() {
           </div>
           <div className="space-y-1 text-right">
             <div className="text-muted-foreground uppercase">Last Check</div>
-            <div className="text-sm">{lastCheck.toLocaleTimeString([], { hour12: false })}</div>
+            <div className="text-sm">
+              {lastCheck ? lastCheck.toLocaleTimeString([], { hour12: false }) : '--:--:--'}
+            </div>
           </div>
         </div>
       </div>

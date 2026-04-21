@@ -6,7 +6,6 @@ import {
   Database, 
   Settings, 
   HelpCircle, 
-  Cpu, 
   Network, 
   ShieldCheck,
   ChevronRight,
@@ -14,11 +13,12 @@ import {
 } from 'lucide-react';
 
 export function LibrariansDesk() {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const { data: commandLog, persist: logCommand } = useConveyor<string[]>('commands', []);
   const [input, setInput] = useState('');
 
   useEffect(() => {
+    setCurrentTime(new Date());
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -76,7 +76,7 @@ export function LibrariansDesk() {
         <div className="flex flex-col items-end">
           <span className="text-[9px] text-muted-foreground font-code leading-none mb-1">LOCAL_TIME</span>
           <span className="text-xs font-bold text-primary font-code leading-none">
-            {currentTime.toLocaleTimeString([], { hour12: false })}
+            {currentTime ? currentTime.toLocaleTimeString([], { hour12: false }) : '--:--:--'}
           </span>
         </div>
         <div className="flex items-center gap-2 border-l border-primary/10 pl-6">

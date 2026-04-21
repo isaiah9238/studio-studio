@@ -7,7 +7,7 @@ export type HeartbeatStatus = 'stable' | 'warning' | 'flatline';
 export function useHeartbeat() {
   const [status, setStatus] = useState<HeartbeatStatus>('stable');
   const [latency, setLatency] = useState<number>(0);
-  const [lastCheck, setLastCheck] = useState<Date>(new Date());
+  const [lastCheck, setLastCheck] = useState<Date | null>(null);
 
   const checkPulse = useCallback(async () => {
     const start = performance.now();
@@ -31,6 +31,7 @@ export function useHeartbeat() {
   }, []);
 
   useEffect(() => {
+    setLastCheck(new Date());
     const interval = setInterval(checkPulse, 5000);
     return () => clearInterval(interval);
   }, [checkPulse]);
