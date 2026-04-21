@@ -2,21 +2,21 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { LogEntry, INITIAL_LOGS } from '@/lib/mock-data';
-import { Terminal, ShieldAlert, Cpu, Search } from 'lucide-react';
+import { Terminal, Cpu, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { aiLogAnomalyDetection } from '@/ai/flows/ai-log-anomaly-detection-flow';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 export function ScryingPool() {
-  const [logs, setLogs] = useState<LogEntry[]>(INITIAL_LOGS);
+  const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [mounted, setMounted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setLogs(INITIAL_LOGS);
     setMounted(true);
+    
     const interval = setInterval(() => {
       const newLog: LogEntry = {
         id: Math.random().toString(36).substr(2, 9),
@@ -64,11 +64,27 @@ export function ScryingPool() {
         }]);
       }
     } catch (err) {
-      // Errors handled centrally if error emitter is present, otherwise simple catch
+      // Error handling
     } finally {
       setIsAnalyzing(false);
     }
   };
+
+  if (!mounted) {
+    return (
+      <div className="flex flex-col h-full bg-card border border-primary/20 rounded-lg overflow-hidden relative">
+        <div className="flex items-center justify-between p-3 border-b border-primary/20 bg-primary/5">
+          <div className="flex items-center gap-2">
+            <Terminal className="w-4 h-4 text-primary" />
+            <h2 className="text-xs font-bold tracking-[0.2em] text-primary uppercase">Scrying Pool</h2>
+          </div>
+        </div>
+        <div className="flex-1 p-2 font-code text-[11px] text-muted-foreground animate-pulse">
+          INITIALIZING_TERMINAL_INTERFACE...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full bg-card border border-primary/20 rounded-lg overflow-hidden relative shadow-[0_0_20px_rgba(0,229,255,0.05)]">
@@ -98,7 +114,7 @@ export function ScryingPool() {
           ref={scrollRef}
           className="h-full overflow-y-auto terminal-scroll pr-2"
         >
-          {mounted && logs.map((log) => (
+          {logs.map((log) => (
             <div key={log.id} className="mb-1 group">
               <span className="text-muted-foreground mr-2">[{log.timestamp.includes('T') ? log.timestamp.split('T')[1].split('.')[0] : log.timestamp}]</span>
               <span className={cn(

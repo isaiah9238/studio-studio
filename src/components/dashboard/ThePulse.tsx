@@ -2,9 +2,15 @@
 
 import { useHeartbeat } from '@/hooks/useHeartbeat';
 import { Activity } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export function ThePulse() {
   const { status, latency, lastCheck } = useHeartbeat();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="flex flex-col h-full bg-card border border-primary/20 rounded-lg p-3 relative shadow-[0_0_20px_rgba(0,229,255,0.05)] overflow-hidden">
@@ -23,7 +29,6 @@ export function ThePulse() {
 
       <div className="flex-1 flex flex-col justify-center items-center gap-4">
         <div className="relative w-full h-12 flex items-center justify-center">
-          {/* Heartbeat Visualization */}
           <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 200 60">
             <path
               d={status === 'flatline' ? "M0 30 L200 30" : "M0 30 L20 30 L30 10 L40 50 L50 30 L80 30 L90 15 L100 45 L110 30 L150 30 L160 5 L170 55 L180 30 L200 30"}
@@ -53,7 +58,7 @@ export function ThePulse() {
           <div className="space-y-1 text-right">
             <div className="text-muted-foreground uppercase">Last Check</div>
             <div className="text-sm">
-              {lastCheck ? lastCheck.toLocaleTimeString([], { hour12: false }) : '--:--:--'}
+              {mounted && lastCheck ? lastCheck.toLocaleTimeString([], { hour12: false }) : '--:--:--'}
             </div>
           </div>
         </div>
