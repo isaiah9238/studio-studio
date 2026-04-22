@@ -61,3 +61,4 @@ if (!searchQuery.trim()) {
 ```typescript
 export default AiSearch;
 ```
+
