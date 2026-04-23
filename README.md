@@ -22,6 +22,7 @@ The Alchemist Fortress is a specialized monitoring interface built with Next.js,
 │   │   ├── dev.ts               # Genkit dev entry point
 │   │   └── genkit.ts            # Genkit client configuration
 │   ├── app/                     # Next.js App Router
+│   │   ├── actions/             # Server Actions (AI & Data)
 │   │   ├── globals.css          # Cyberpunk/Terminal theme styles
 │   │   ├── layout.tsx           # Root layout with HUD elements
 │   │   └── page.tsx             # Main dashboard assembly
@@ -37,6 +38,7 @@ The Alchemist Fortress is a specialized monitoring interface built with Next.js,
 │   │   ├── useHeartbeat.ts      # Connection health logic
 │   │   └── use-mobile.tsx       # Viewport detection
 │   └── lib/                     # System utilities
+│       ├── firebase-admin.ts    # Secure server-side Firebase configuration
 │       ├── mock-data.ts         # Initial system state
 │       └── utils.ts             # Tailwind merging utilities
 ├── public/                      # Static assets
@@ -49,6 +51,7 @@ The Alchemist Fortress is a specialized monitoring interface built with Next.js,
 - **Framework**: Next.js 15 (App Router)
 - **Styling**: Tailwind CSS + ShadCN UI
 - **AI Engine**: Google Genkit (Gemini 2.5 Flash)
+- **Backend**: Firebase Admin SDK (VFS & Auth)
 - **Icons**: Lucide React
 - **Fonts**: JetBrains Mono & Inter
 
