@@ -6,22 +6,22 @@ import { z } from 'zod';
 
 export const anomalyDetectionFlow = defineFlow(
   {
-    name: 'anomalyDetectionFlow',
-    inputSchema: z.string(),
-    outputSchema: z.object({
-      integrity: z.number(),
-      analysis: z.string(),
-    }),
-  },
-  async (logData) => {
-    const response = await generate({
-      model: gemini15Flash,
-      prompt: `Analyze these Alchemist Fortress logs for anomalies: ${logData}`,
-    });
+      name: 'anomalyDetectionFlow',
+          inputSchema: z.string(),
+              outputSchema: z.object({
+                    integrity: z.number(),
+                          analysis: z.string(),
+                              }),
+                                },
+                                  async (logData) => {
+                                      const response = await generate({
+                                            model: gemini15Flash,
+                                                  prompt: `Analyze these Alchemist Fortress logs for anomalies: ${logData}`,
+                                                      });
 
-    return {
-      integrity: 100, // You can make this dynamic later
-      analysis: response.text(),
-    };
-  }
-);
+                                                          return {
+                                                                integrity: 100, // You can make this dynamic later
+                                                                      analysis: response.text(),
+                                                                          };
+                                                                            }
+                                                                            );

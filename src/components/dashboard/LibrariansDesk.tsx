@@ -9,15 +9,18 @@ import {
   Network, 
   ShieldCheck,
   ChevronRight,
-  Monitor
+  Monitor,
+  Activity
 } from 'lucide-react';
 
 export function LibrariansDesk() {
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const { data: commandLog, persist: logCommand } = useConveyor<string[]>('commands', []);
   const [input, setInput] = useState('');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     setCurrentTime(new Date());
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -50,10 +53,10 @@ export function LibrariansDesk() {
           </div>
         </div>
         <div className="flex items-center gap-2 group cursor-help">
-          <Network className="w-3 h-3 text-primary" />
+          <Activity className="w-3 h-3 text-accent animate-pulse" />
           <div className="flex flex-col">
-            <span className="text-[9px] text-muted-foreground leading-none mb-0.5">DATA_CONVEYOR</span>
-            <span className="text-[10px] font-bold text-primary leading-none">OPTIMIZED</span>
+            <span className="text-[9px] text-muted-foreground leading-none mb-0.5">AICA_ASSESSMENT</span>
+            <span className="text-[10px] font-bold text-accent leading-none">ACTIVE</span>
           </div>
         </div>
       </div>
@@ -76,7 +79,7 @@ export function LibrariansDesk() {
         <div className="flex flex-col items-end">
           <span className="text-[9px] text-muted-foreground font-code leading-none mb-1">LOCAL_TIME</span>
           <span className="text-xs font-bold text-primary font-code leading-none">
-            {currentTime ? currentTime.toLocaleTimeString([], { hour12: false }) : '--:--:--'}
+            {mounted && currentTime ? currentTime.toLocaleTimeString([], { hour12: false }) : '--:--:--'}
           </span>
         </div>
         <div className="flex items-center gap-2 border-l border-primary/10 pl-6">
