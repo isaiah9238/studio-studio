@@ -95,7 +95,7 @@ export function LibrariansDesk() {
       {/* Command Interface */}
       <div className="flex-1 flex flex-col gap-1 w-full overflow-hidden">
         <div className="hidden md:flex gap-2 h-4 overflow-hidden items-end">
-          {commandLog.slice(-1).map((log, i) => (
+          {mounted && commandLog.slice(-1).map((log, i) => (
             <span key={i} className="text-[9px] font-code text-primary/40 truncate italic">{log}</span>
           ))}
         </div>
